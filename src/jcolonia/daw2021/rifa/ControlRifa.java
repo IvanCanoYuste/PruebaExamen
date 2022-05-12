@@ -16,6 +16,8 @@ public class ControlRifa {
 
 	private Scanner entrada;
 //	- entrada: Scanner
+	
+	private int vecesGanado;
 
 	VistaMenúBásico vista;
 	private static final String[] OPCIONES_MENÚ_PRINCIPAL = { "Elegir objeto", "Salir" };
@@ -24,6 +26,7 @@ public class ControlRifa {
 		this.entrada = entrada;
 		vista = new VistaMenúBásico("Rifa / Menú principal", entrada, OPCIONES_MENÚ_PRINCIPAL);
 		listaFetiches = new Vector<Fetiche>();
+		vecesGanado = 0;
 	}
 //	+ ControlNombres(entrada: Scanner)
 
@@ -54,6 +57,14 @@ public class ControlRifa {
 			case 2:
 				fin = true;
 				Vista.mostrarTexto("\n\n«Programa finalizado»\n\n");
+				for(int i = 0;i<listaFetiches.size();i++) {
+					Fetiche texto = listaFetiches.get(i);
+					
+					String textoString = String.format("%s",texto);
+					
+					Vista.mostrarTexto(textoString);
+					
+				}
 				break;
 			default:
 				operaciónNoImplementada();
@@ -78,15 +89,20 @@ public class ControlRifa {
 
 		objetoElegido = Fetiche.values()[opción - 1];
 		objetoGanador = Fetiche.sortear();
+		
+		listaFetiches.add(objetoGanador);
 
 		mensaje = String.format("   ** ¡Ha salido «%s»!", objetoGanador);
 		Vista.mostrarTexto(mensaje);
 
 		if (objetoElegido == objetoGanador) {
 			mensaje = "   ** ¡Mala suerte le llueve a tu compañero!";
+			vecesGanado++;
+			
 		} else {
 			mensaje = "   ** ¡Suerte que te libraste!";
 		}
+		Vista.mostrarTexto(String.format("   **Veces ganas esta vez: %d",vecesGanado));
 		Vista.mostrarTexto(mensaje);
 
 		vistaSorteo.pedirContinuar();

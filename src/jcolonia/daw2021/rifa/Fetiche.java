@@ -79,6 +79,7 @@ public enum Fetiche {
 		return objetoElegido;
 		
 		
+		
 		//(throw new RuntimeException("Código pendiente, programador descuidado");
 	}
 }
